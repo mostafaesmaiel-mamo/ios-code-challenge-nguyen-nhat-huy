@@ -1,0 +1,41 @@
+# Uncomment the next line to define a global platform for your project
+ platform :ios, '13.4'
+
+workspace 'Mamo.xcworkspace'
+project 'Mamo.xcodeproj'
+
+def networking_pod
+     pod 'Networking', :path => 'DevelopmentPods/Networking'
+end
+
+def friend_list_pod
+     pod 'FriendList', :path => 'DevelopmentPods/FriendList'
+end
+
+def development_pods
+  networking_pod
+  friend_list_pod
+end
+
+target 'Mamo' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Mamo
+  development_pods
+end
+
+# Example Application Modules
+target 'Networking_Example' do
+  use_frameworks!
+  project 'DevelopmentPods/Networking/Example/Networking.xcodeproj'
+  
+  networking_pod
+end
+
+target 'FriendList_Example' do
+  use_frameworks!
+  project 'DevelopmentPods/FriendList/Example/FriendList.xcodeproj'
+  
+  networking_pod
+end

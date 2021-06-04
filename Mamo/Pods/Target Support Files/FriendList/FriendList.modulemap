@@ -1,0 +1,6 @@
+framework module FriendList {
+  umbrella header "FriendList-umbrella.h"
+
+  export *
+  module * { export * }
+}

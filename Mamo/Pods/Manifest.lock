@@ -1,0 +1,21 @@
+PODS:
+  - FriendList (0.1.0)
+  - Networking (0.1.0)
+
+DEPENDENCIES:
+  - FriendList (from `DevelopmentPods/FriendList`)
+  - Networking (from `DevelopmentPods/Networking`)
+
+EXTERNAL SOURCES:
+  FriendList:
+    :path: DevelopmentPods/FriendList
+  Networking:
+    :path: DevelopmentPods/Networking
+
+SPEC CHECKSUMS:
+  FriendList: 8471a5afbc8cdf7fc0c73fcf716d0d7cb203d0b4
+  Networking: 10fd67d90c89dd39a557ca63f28961db71ccd313
+
+PODFILE CHECKSUM: f0ff39f556441c8909ae1ba8cb5e283c426abf6a
+
+COCOAPODS: 1.10.1

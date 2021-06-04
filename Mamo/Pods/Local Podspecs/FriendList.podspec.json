@@ -1,0 +1,22 @@
+{
+  "name": "FriendList",
+  "version": "0.1.0",
+  "summary": "A short description of FriendList.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Huy Nguyen/FriendList",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Huy Nguyen": "huy.n.pyco@aux.go-jek.com"
+  },
+  "source": {
+    "git": "https://github.com/Huy Nguyen/FriendList.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "FriendList/Classes/**/*"
+}
