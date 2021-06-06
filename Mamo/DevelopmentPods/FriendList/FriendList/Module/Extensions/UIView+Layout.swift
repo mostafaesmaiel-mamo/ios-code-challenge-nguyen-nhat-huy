@@ -98,6 +98,14 @@ extension UIView {
     }
     
     @discardableResult
+    open func withSize<T: UIView>(_ size: CGSize) -> T {
+        translatesAutoresizingMaskIntoConstraints = false
+        widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        return self as! T
+    }
+    
+    @discardableResult
     open func fillSuperview(padding: UIEdgeInsets = .zero) -> AnchoredConstraints {
         translatesAutoresizingMaskIntoConstraints = false
         let anchoredConstraints = AnchoredConstraints()
