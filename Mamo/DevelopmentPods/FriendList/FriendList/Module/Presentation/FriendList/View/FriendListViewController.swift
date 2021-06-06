@@ -7,7 +7,8 @@
 
 import Foundation
 
-final class FriendListViewController: ListController<FriendListItemCell, FriendListItemViewModel>, UICollectionViewDelegateFlowLayout {
+final class FriendListViewController: ListHeaderController<FriendListItemCell, FriendListItemViewModel, FriendListHeader>,
+                                      UICollectionViewDelegateFlowLayout {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +22,16 @@ final class FriendListViewController: ListController<FriendListItemCell, FriendL
                   .init(friend: Friend(id: "7", publicName: "Benjamin Tran"))]
     }
     
+    override func setupHeader(_ header: FriendListHeader) {
+        header.friendListHeaderCellsHorizontalController.collectionView.backgroundColor = .clear
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width, height: 80)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 120)
+        return .init(width: view.frame.width, height: 164)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
