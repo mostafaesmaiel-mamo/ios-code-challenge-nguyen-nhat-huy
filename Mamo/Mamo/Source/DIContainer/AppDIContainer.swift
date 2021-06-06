@@ -6,13 +6,23 @@
 //
 
 import Foundation
+import Networking
+import FriendList
 
 final class AppDIContainer {
     
+    lazy var appConfiguration = AppConfigurations()
+    
+    // MARK: - Network
+    lazy var apiDataTransferService: APIDataTransferService = {
+        let config = APIDataNetworkConfig(baseURL: URL(string: appConfiguration.apiBaseURL)!, headers: [:], queryParameters: [:])
+        let apiDataNetwork  = NetworkServiceDefault(config: config)
+        return APIDataTransferServiceDefault(with: apiDataNetwork)
+    }()
+    
     // MARK: - Feature Modules
-//    func makeFriendListModule() -> FriendList.Module {
-//        let dependencies = MoviesSearch.ModuleDependencies(apiDataTransferService: apiDataTransferService,
-//                                                           imageDataTransferService: imageDataTransferService)
-//        return MoviesSearch.Module(dependencies: dependencies)
-//    }
+    func makeFriendListModule() -> FriendList.Module {
+        let dependencies = FriendList.ModuleDependencies(apiDataTransferService: apiDataTransferService)
+        return FriendList.Module(dependencies: dependencies)
+    }
 }

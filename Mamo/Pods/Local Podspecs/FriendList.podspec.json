@@ -16,7 +16,13 @@
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "9.0"
+    "ios": "13.4"
   },
-  "source_files": "FriendList/Classes/**/*"
+  "source_files": "FriendList/Module/**/*.{swift}",
+  "resources": "FriendList/Module/**/*.{xcassets,json,storyboard,xib,xcdatamodeld}",
+  "dependencies": {
+    "Networking": [
+
+    ]
+  }
 }

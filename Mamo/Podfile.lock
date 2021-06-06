@@ -1,5 +1,6 @@
 PODS:
-  - FriendList (0.1.0)
+  - FriendList (0.1.0):
+    - Networking
   - Networking (0.1.0)
 
 DEPENDENCIES:
@@ -13,8 +14,8 @@ EXTERNAL SOURCES:
     :path: DevelopmentPods/Networking
 
 SPEC CHECKSUMS:
-  FriendList: 8471a5afbc8cdf7fc0c73fcf716d0d7cb203d0b4
-  Networking: 10fd67d90c89dd39a557ca63f28961db71ccd313
+  FriendList: e0986f25d1a0a0c216c0c4a6f12c737615b81711
+  Networking: f06a92a992578896726059ffeb04841c8b34a3cd
 
 PODFILE CHECKSUM: f0ff39f556441c8909ae1ba8cb5e283c426abf6a
 
