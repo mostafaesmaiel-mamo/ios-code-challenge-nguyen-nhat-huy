@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-Mamo/Pods-Mamo-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/FriendList/FriendList.framework
+${BUILT_PRODUCTS_DIR}/Networking/Networking.framework

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FriendList
 
 class SimpleListCell: ListCell<UIColor> {
     override var item: UIColor! { didSet { backgroundColor = item }}

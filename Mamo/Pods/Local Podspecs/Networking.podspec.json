@@ -18,5 +18,6 @@
   "platforms": {
     "ios": "13.4"
   },
-  "source_files": "Networking/Classes/**/*"
+  "source_files": "Networking/Module/**/*.{swift}",
+  "resources": "Networking/Module/**/*.{xcassets,json,storyboard,xib,xcdatamodeld}"
 }
