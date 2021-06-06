@@ -17,3 +17,26 @@ extension UILabel {
         self.numberOfLines = numberOfLines
     }
 }
+
+extension String {
+    func imageWithFirstCharacter() -> UIImage? {
+        let frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+        let nameLabel = UILabel(text: nil,
+                            font: .boldSystemFont(ofSize: 24),
+                            textColor: .white,
+                            textAlignment: .center)
+        nameLabel.frame = frame
+        nameLabel.backgroundColor = .red
+        guard let firstChar = self.first else {
+            return nil
+        }
+        nameLabel.text = String(firstChar).capitalized
+        UIGraphicsBeginImageContext(frame.size)
+        if let currentContext = UIGraphicsGetCurrentContext() {
+            nameLabel.layer.render(in: currentContext)
+            let nameImage = UIGraphicsGetImageFromCurrentImageContext()
+            return nameImage
+        }
+        return nil
+    }
+}
