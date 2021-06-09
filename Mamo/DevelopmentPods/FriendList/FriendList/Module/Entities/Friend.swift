@@ -12,3 +12,7 @@ struct Friend: Equatable, Identifiable {
     let id: Identifier
     let publicName: String
 }
+
+struct FriendFrequents: Equatable {
+    let friends: [Friend]
+}

@@ -11,12 +11,12 @@ class FriendListHeaderHorizontalController: ListController<FriendListFrequentsCe
                                             UICollectionViewDelegateFlowLayout  {
     override func viewDidLoad() {
         super.viewDidLoad()
-        items = [ .init(friend: Friend(id: "10", publicName: "Nicolas")),
+        items = [ [.init(friend: Friend(id: "10", publicName: "Nicolas")),
                   .init(friend: Friend(id: "12", publicName: "Phil Jonh")),
                   .init(friend: Friend(id: "13", publicName: "Harry Poster")),
                   .init(friend: Friend(id: "14", publicName: "Lucas Mazques")),
                   .init(friend: Friend(id: "15", publicName: "Onion")),
-                  .init(friend: Friend(id: "16", publicName: "Yvels"))]
+                  .init(friend: Friend(id: "16", publicName: "Yvels"))]]
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

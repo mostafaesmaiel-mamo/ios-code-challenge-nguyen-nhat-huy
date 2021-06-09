@@ -40,11 +40,17 @@ final class FriendListHeader: UICollectionReusableView {
     
     private let friendFrequentLabel = UILabel(text: "Frequents", font: .monospacedSystemFont(ofSize: 12, weight: .light), numberOfLines: 0)
     private let friendOnMamoLabel = UILabel(text: "Your friends on Mamo", font: .monospacedSystemFont(ofSize: 12, weight: .light), numberOfLines: 0)
+    private let yourContactsLabel = UILabel(text: "Your contacts", font: .monospacedSystemFont(ofSize: 12, weight: .light), numberOfLines: 0)
     
     let friendListHeaderCellsHorizontalController = FriendListHeaderHorizontalController(scrollDirection: .horizontal)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        guard frame.size.height < 164 else {
+            stack(yourContactsLabel)
+            return
+        }
         
         stack(friendFrequentLabel,
               stack(friendListHeaderCellsHorizontalController.view),
