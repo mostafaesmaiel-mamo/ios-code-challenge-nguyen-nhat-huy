@@ -11,12 +11,10 @@ class FriendListHeaderHorizontalController: ListController<FriendListFrequentsCe
                                             UICollectionViewDelegateFlowLayout  {
     override func viewDidLoad() {
         super.viewDidLoad()
-        items = [ [.init(friend: Friend(id: "10", publicName: "Nicolas")),
-                  .init(friend: Friend(id: "12", publicName: "Phil Jonh")),
-                  .init(friend: Friend(id: "13", publicName: "Harry Poster")),
-                  .init(friend: Friend(id: "14", publicName: "Lucas Mazques")),
-                  .init(friend: Friend(id: "15", publicName: "Onion")),
-                  .init(friend: Friend(id: "16", publicName: "Yvels"))]]
+    }
+    
+    func bind(to viewModel: FriendListViewModel) {
+        viewModel.friendListItemViewModel.observe(on: self) { [weak self] in self?.updateItems($0) }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -28,3 +26,9 @@ class FriendListHeaderHorizontalController: ListController<FriendListFrequentsCe
     }
 }
 
+extension FriendListHeaderHorizontalController {
+    
+    fileprivate func updateItems(_ friendListItemsVM: [FriendListItemViewModel]) {
+        self.items.append(friendListItemsVM)
+    }
+}
