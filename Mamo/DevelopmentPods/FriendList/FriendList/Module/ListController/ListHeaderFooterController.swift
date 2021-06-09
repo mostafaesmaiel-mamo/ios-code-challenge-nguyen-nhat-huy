@@ -9,7 +9,7 @@ import UIKit
 
 open class ListHeaderFooterController<T: ListCell<U>, U, H: UICollectionReusableView, F: UICollectionReusableView>: UICollectionViewController {
     
-    open var items = [U]() {
+    open var items = [[U]]() {
         didSet {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -24,7 +24,8 @@ open class ListHeaderFooterController<T: ListCell<U>, U, H: UICollectionReusable
         let cell = T()
         let largeHeight: CGFloat = 1000
         cell.frame = .init(x: 0, y: 0, width: cellWidth, height: largeHeight)
-        cell.item = items[indexPath.item]
+        let item = items[indexPath.section][indexPath.item]
+        cell.item = item
         cell.layoutIfNeeded()
         
         return cell.systemLayoutSizeFitting(.init(width: cellWidth, height: largeHeight)).height
@@ -48,7 +49,8 @@ open class ListHeaderFooterController<T: ListCell<U>, U, H: UICollectionReusable
     
     override open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! T
-        cell.item = items[indexPath.row]
+        let item = items[indexPath.section][indexPath.item]
+        cell.item = item
         return cell
     }
     
@@ -66,8 +68,12 @@ open class ListHeaderFooterController<T: ListCell<U>, U, H: UICollectionReusable
         return supplementaryView
     }
     
-    override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return items.count
+    }
+    
+    override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return items[section].count
     }
     
     override open func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {

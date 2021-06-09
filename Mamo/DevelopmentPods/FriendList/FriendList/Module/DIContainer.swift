@@ -15,8 +15,23 @@ final class DIContainer {
         self.dependencies = dependencies
     }
     
-    func makeFriendListViewController() -> FriendListViewController {
-        return FriendListViewController()
+    // MARK: - Use Cases
+    func makeFetchFriendListUseCase() -> FetchFriendsFrequentUseCase {
+        return DefaultFetchFriendsFrequentUseCase(friendListRepository: makeFriendListRepository())
+    }
+    
+    // MARK: - Repositories
+    func makeFriendListRepository() -> FriendListRepository {
+        return DefaultFriendListRepository(apiDataTransferService: dependencies.apiDataTransferService)
+    }
+    
+    func makeFriendListViewController(actions: FriendListViewModelActions) -> FriendListViewController {
+        return FriendListViewController.`init`(with: makeFriendListViewModel(actions: actions))
+    }
+    
+    func makeFriendListViewModel(actions: FriendListViewModelActions) -> FriendListViewModel {
+        return DefaultFriendListViewModel(fetchFriendFrequentsUseCase: makeFetchFriendListUseCase(),
+                                          actions: actions)
     }
     
     func makeFriendListFlowCoordinator(navigationController: UINavigationController) -> FriendListFlowCoordinator {

@@ -10,6 +10,6 @@ import Foundation
 final class AppConfigurations {
     
     lazy var apiBaseURL: String = {
-        return "https://schema.getpostman.com"
+        return "https://60adf30580a61f001733208d.mockapi.io/"
     }()
 }

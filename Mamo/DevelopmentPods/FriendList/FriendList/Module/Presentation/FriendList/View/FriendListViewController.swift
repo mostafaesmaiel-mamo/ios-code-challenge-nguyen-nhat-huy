@@ -7,23 +7,31 @@
 
 import Foundation
 
-final class FriendListViewController: ListHeaderController<FriendListItemCell, FriendListItemViewModel, FriendListHeader>,
+final class FriendListViewController: ListController<FriendListItemCell, FriendListItemViewModel>, // FriendListHeader
                                       UICollectionViewDelegateFlowLayout {
+    
+    private var viewModel: FriendListViewModel!
+    
+    static func `init`(with viewModel: FriendListViewModel) -> FriendListViewController {
+        let view = FriendListViewController()
+        view.viewModel = viewModel
+        return view
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        items = [ .init(friend: Friend(id: "1", publicName: "Alexander")),
-                  .init(friend: Friend(id: "2", publicName: "Golden")),
-                  .init(friend: Friend(id: "3", publicName: "Frank")),
-                  .init(friend: Friend(id: "4", publicName: "Red Airship")),
-                  .init(friend: Friend(id: "5", publicName: "Devince")),
-                  .init(friend: Friend(id: "6", publicName: "Caslos")),
-                  .init(friend: Friend(id: "7", publicName: "Benjamin Tran"))]
+        bind(to: viewModel)
+        viewModel.viewDidLoad()
     }
     
-    override func setupHeader(_ header: FriendListHeader) {
-        header.friendListHeaderCellsHorizontalController.collectionView.backgroundColor = .clear
+    func bind(to viewModel: FriendListViewModel) {
+        viewModel.items.observe(on: self) { [weak self] _ in
+            self?.items.append(viewModel.items.value)
+            let contacts = getContactFromCNContact()
+            contacts.forEach {
+                $0.givenName
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
