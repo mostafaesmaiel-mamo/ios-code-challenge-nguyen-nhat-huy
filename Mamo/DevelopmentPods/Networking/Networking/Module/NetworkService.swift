@@ -51,10 +51,11 @@ public final class NetworkServiceDefault: NetworkService {
     
     public func request(requestable: Requestable, completion: @escaping Completion) -> NetworkCancellable? {
         do {
-            //            let urlRequest = try requestable.
-            return nil //request(request: urlRequest, completion: completion)
+            let urlRequest = try requestable.urlRequest(with: config)
+            return request(request: urlRequest, completion: completion)
         } catch {
             completion(.failure(.urlGeneration))
+            return nil
         }
     }
 }
