@@ -427,7 +427,8 @@
 			children = (
 				B30738EE266E78CF00E6703E /* FetchFriendsFrequentUseCase.swift */,
 			);
-			path = UseCases;
+			name = UseCases;
+			path = FriendList/Module/UseCases;
 			sourceTree = "<group>";
 		};
 		B30738F0266E7A0200E6703E /* Common */ = {
@@ -435,7 +436,8 @@
 			children = (
 				B30738F1266E7A1000E6703E /* Cancellable.swift */,
 			);
-			path = Common;
+			name = Common;
+			path = FriendList/Module/Common;
 			sourceTree = "<group>";
 		};
 		B30738F3266F77BF00E6703E /* Network */ = {
@@ -461,7 +463,8 @@
 				B30738FA266F7A8400E6703E /* Repositories */,
 				B30738F3266F77BF00E6703E /* Network */,
 			);
-			path = Data;
+			name = Data;
+			path = FriendList/Module/Data;
 			sourceTree = "<group>";
 		};
 		B30738FA266F7A8400E6703E /* Repositories */ = {
