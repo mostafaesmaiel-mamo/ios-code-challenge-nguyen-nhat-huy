@@ -15,6 +15,7 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
                                       UICollectionViewDelegateFlowLayout {
     
     private var viewModel: FriendListViewModel!
+    private var selectedIndexPath: IndexPath?
     
     lazy var containerOpenSettingStackView: UIStackView = {
         let stackView = UIStackView()
@@ -53,8 +54,10 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
     }
     
     func bind(to viewModel: FriendListViewModel) {
+        viewModel.friendListItemViewModel.observe(on: self) { [weak self] in self?.updateItems($0) }
         viewModel.contactList.observe(on: self) { [weak self] in self?.updateItems($0) }
         viewModel.authorizedContact.observe(on: self) { [weak self] in self?.setupAuthorizeContactView($0) }
+        viewModel.selectedHorizontalContact.observe(on: self) { [weak self] in self?.selectVerticalContact($0) }
     }
     
     override func setupHeader(_ header: FriendListHeader) {
@@ -67,7 +70,7 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 164)
+        return .init(width: view.frame.width, height: section == 0 ? 156 : 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -87,6 +90,10 @@ extension FriendListViewController {
         self.items.append(friendListItemViewModel)
     }
     
+    fileprivate func updateItems(_ friendListItemsVMs: [FriendListItemViewModel]) {
+        self.items.insert(friendListItemsVMs, at: 0)
+    }
+    
     fileprivate func setupAuthorizeContactView(_ isGranted: Bool) {
         guard !isGranted else {
             containerOpenSettingStackView.removeFromSuperview()
@@ -104,5 +111,24 @@ extension FriendListViewController {
            UIApplication.shared.canOpenURL(settings) {
             UIApplication.shared.open(settings)
         }
+    }
+    
+    fileprivate func selectVerticalContact(_ friendListItemViewModel: FriendListItemViewModel?) {
+        guard let friendListItemViewModel = friendListItemViewModel,
+              let item = self.items.first?.firstIndex(of: friendListItemViewModel) else {
+            return
+        }
+        
+        if let selectIndex = selectedIndexPath,
+           let selectedCell = collectionView.cellForItem(at: selectIndex) {
+            selectedCell.isSelected = false
+        }
+        
+        let indexPath = IndexPath(item: item, section: 0)
+        guard let cell = collectionView.cellForItem(at: indexPath) else {
+            return
+        }
+        cell.isSelected = true
+        selectedIndexPath = indexPath
     }
 }

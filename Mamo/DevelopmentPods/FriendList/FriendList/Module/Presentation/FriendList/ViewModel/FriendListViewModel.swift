@@ -28,6 +28,7 @@ protocol FriendListViewModelInput {
 protocol FriendListViewModelOutput {
     var friendListItemViewModel: Observable<[FriendListItemViewModel]> { get }
     var contactList: Observable<[CNContact]> { get }
+    var selectedHorizontalContact: Observable<FriendListItemViewModel?> { get }
     var query: Observable<String> { get }
     var error: Observable<String> { get }
     var authorizedContact: Observable<Bool> { get }
@@ -51,6 +52,7 @@ final class DefaultFriendListViewModel: FriendListViewModel {
     
     let friendListItemViewModel: Observable<[FriendListItemViewModel]> = Observable([])
     let contactList: Observable<[CNContact]> = Observable([])
+    var selectedHorizontalContact: Observable<FriendListItemViewModel?> = Observable(nil)
     let query: Observable<String> = Observable("")
     let error: Observable<String> = Observable("")
     var authorizedContact: Observable<Bool> = Observable(false)

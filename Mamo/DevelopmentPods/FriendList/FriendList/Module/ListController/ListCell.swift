@@ -9,6 +9,17 @@ import UIKit
 
 open class ListCell<T>: UICollectionViewCell {
     
+    open override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                self.layer.borderWidth = 1.5
+                self.layer.borderColor = UIColor.purple.cgColor
+            } else {
+                self.layer.borderWidth = 0
+                self.layer.borderColor = UIColor.clear.cgColor
+            }
+        }
+    }
     
     open var item: T!
     
