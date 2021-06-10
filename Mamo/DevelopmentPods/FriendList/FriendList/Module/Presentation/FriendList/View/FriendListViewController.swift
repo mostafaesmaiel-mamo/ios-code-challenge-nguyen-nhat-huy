@@ -15,6 +15,7 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
                                       UICollectionViewDelegateFlowLayout {
     
     private var viewModel: FriendListViewModel!
+    private var selectedIndexPath: IndexPath?
     
     lazy var containerOpenSettingStackView: UIStackView = {
         let stackView = UIStackView()
@@ -56,6 +57,7 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
         viewModel.friendListItemViewModel.observe(on: self) { [weak self] in self?.updateItems($0) }
         viewModel.contactList.observe(on: self) { [weak self] in self?.updateItems($0) }
         viewModel.authorizedContact.observe(on: self) { [weak self] in self?.setupAuthorizeContactView($0) }
+        viewModel.selectedHorizontalContact.observe(on: self) { [weak self] in self?.selectVerticalContact($0) }
     }
     
     override func setupHeader(_ header: FriendListHeader) {
@@ -109,5 +111,24 @@ extension FriendListViewController {
            UIApplication.shared.canOpenURL(settings) {
             UIApplication.shared.open(settings)
         }
+    }
+    
+    fileprivate func selectVerticalContact(_ friendListItemViewModel: FriendListItemViewModel?) {
+        guard let friendListItemViewModel = friendListItemViewModel,
+              let item = self.items.first?.firstIndex(of: friendListItemViewModel) else {
+            return
+        }
+        
+        if let selectIndex = selectedIndexPath,
+           let selectedCell = collectionView.cellForItem(at: selectIndex) {
+            selectedCell.isSelected = false
+        }
+        
+        let indexPath = IndexPath(item: item, section: 0)
+        guard let cell = collectionView.cellForItem(at: indexPath) else {
+            return
+        }
+        cell.isSelected = true
+        selectedIndexPath = indexPath
     }
 }
