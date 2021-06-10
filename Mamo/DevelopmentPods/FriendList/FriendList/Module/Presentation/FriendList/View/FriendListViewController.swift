@@ -53,6 +53,7 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
     }
     
     func bind(to viewModel: FriendListViewModel) {
+        viewModel.friendListItemViewModel.observe(on: self) { [weak self] in self?.updateItems($0) }
         viewModel.contactList.observe(on: self) { [weak self] in self?.updateItems($0) }
         viewModel.authorizedContact.observe(on: self) { [weak self] in self?.setupAuthorizeContactView($0) }
     }
@@ -67,7 +68,7 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 164)
+        return .init(width: view.frame.width, height: section == 0 ? 156 : 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -85,6 +86,10 @@ extension FriendListViewController {
         }
         self.items.removeAll()
         self.items.append(friendListItemViewModel)
+    }
+    
+    fileprivate func updateItems(_ friendListItemsVMs: [FriendListItemViewModel]) {
+        self.items.insert(friendListItemsVMs, at: 0)
     }
     
     fileprivate func setupAuthorizeContactView(_ isGranted: Bool) {
