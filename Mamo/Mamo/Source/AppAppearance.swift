@@ -11,14 +11,13 @@ import UIKit
 final class AppAppearance {
     
     static func setupAppearance() {
-        UINavigationBar.appearance().barTintColor = .white
-        UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().titleTextAttributes = [ NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .light) ]
     }
 }
 
 extension UINavigationController {
     @objc override open var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
 }

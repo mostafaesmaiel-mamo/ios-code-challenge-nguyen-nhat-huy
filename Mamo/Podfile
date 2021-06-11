@@ -5,7 +5,7 @@ workspace 'Mamo.xcworkspace'
 project 'Mamo.xcodeproj'
 
 def networking_pod
-     pod 'Networking', :path => 'DevelopmentPods/Networking'
+     pod 'Networking', :path => 'DevelopmentPods/Networking', :testspecs => ['Tests']
 end
 
 def friend_list_pod
