@@ -43,6 +43,8 @@
 		B30738F8266F789B00E6703E /* FriendListFrequentResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30738F7266F789B00E6703E /* FriendListFrequentResponseDTO+Mapping.swift */; };
 		B30738FC266F7AA700E6703E /* DefaultFriendListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30738FB266F7AA700E6703E /* DefaultFriendListRepository.swift */; };
 		B30738FF266F7AEA00E6703E /* RepositoryTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30738FE266F7AEA00E6703E /* RepositoryTask.swift */; };
+		B3359FD2267264BD00C03552 /* SearchFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3359FD1267264BD00C03552 /* SearchFriendUseCase.swift */; };
+		B3359FD62672675700C03552 /* SearchAccountResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3359FD52672675700C03552 /* SearchAccountResponseDTO+Mapping.swift */; };
 		B804949EA63031DE5788BA716817433E /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D61563C1E9BA40650AB3CCF7913826 /* ListCell.swift */; };
 		B868443600526A952567B501BD945B2E /* Pods-Mamo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BB024B1966F0ADC8817085EBDF82DB0 /* Pods-Mamo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6CFBF048E03AEA820D33980B9ED71C8 /* Pods-Networking_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 84B5AD68B6A8BA70BA061093AB0EF892 /* Pods-Networking_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -158,6 +160,8 @@
 		B30738FB266F7AA700E6703E /* DefaultFriendListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFriendListRepository.swift; sourceTree = "<group>"; };
 		B30738FE266F7AEA00E6703E /* RepositoryTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTask.swift; sourceTree = "<group>"; };
 		B30F29EFD82F7ABC93BB2E32E6FEBD20 /* ListHeaderController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListHeaderController.swift; sourceTree = "<group>"; };
+		B3359FD1267264BD00C03552 /* SearchFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendUseCase.swift; sourceTree = "<group>"; };
+		B3359FD52672675700C03552 /* SearchAccountResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchAccountResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
 		C103E2D3D5F8048D3702F28A743776CE /* Pods-Mamo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Mamo-frameworks.sh"; sourceTree = "<group>"; };
 		C68F875E47F5654A2BF4B8E2DE809379 /* Networking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Networking-prefix.pch"; sourceTree = "<group>"; };
 		C7A9836A218DDAB6357036E3B6214F00 /* Pods-FriendList_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-FriendList_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -426,6 +430,7 @@
 			isa = PBXGroup;
 			children = (
 				B30738EE266E78CF00E6703E /* FetchFriendsFrequentUseCase.swift */,
+				B3359FD1267264BD00C03552 /* SearchFriendUseCase.swift */,
 			);
 			name = UseCases;
 			path = FriendList/Module/UseCases;
@@ -453,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				B30738F7266F789B00E6703E /* FriendListFrequentResponseDTO+Mapping.swift */,
+				B3359FD52672675700C03552 /* SearchAccountResponseDTO+Mapping.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -797,6 +803,7 @@
 				B30738E8266E76D800E6703E /* Observable.swift in Sources */,
 				B30738E3266E75A800E6703E /* FriendListFrequentsCell.swift in Sources */,
 				4D20EC4D727BDC8DF730D9EA1A914147 /* DIContainer.swift in Sources */,
+				B3359FD2267264BD00C03552 /* SearchFriendUseCase.swift in Sources */,
 				B30738F5266F77D000E6703E /* APIEndpoints.swift in Sources */,
 				FBAD7FDAC2DF24B7745C1C814B766CE9 /* Friend.swift in Sources */,
 				B30738F8266F789B00E6703E /* FriendListFrequentResponseDTO+Mapping.swift in Sources */,
@@ -808,6 +815,7 @@
 				2A9ECFFCEDABAA8649A38733A26AF9A7 /* FriendListItemCell.swift in Sources */,
 				A234973BFE9846006504FCD0A5CD8FD3 /* FriendListItemViewModel.swift in Sources */,
 				968FEB9753E61F11865E25D19DC809DF /* FriendListViewController.swift in Sources */,
+				B3359FD62672675700C03552 /* SearchAccountResponseDTO+Mapping.swift in Sources */,
 				B804949EA63031DE5788BA716817433E /* ListCell.swift in Sources */,
 				8A655F1DA2CE97FD14E5D67CE513AC15 /* ListController.swift in Sources */,
 				59D35E23DE3A86F1AF90FA456715DE25 /* ListHeaderController.swift in Sources */,
