@@ -42,6 +42,6 @@ extension SearchAccountDTO {
 
 extension SearchAccountDTO.MamoAccountDTO {
     func toDomain() -> Friend {
-        return .init(id: Friend.Identifier(id), key: key, value: value, publicName: publicName ?? "")
+        return .init(id: Friend.Identifier(id), key: key, value: value, publicName: publicName ?? "", isMamoOrFrequents: false, imageData: nil)
     }
 }

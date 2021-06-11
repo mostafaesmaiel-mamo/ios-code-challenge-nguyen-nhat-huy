@@ -13,6 +13,8 @@ struct Friend: Equatable, Identifiable {
     let key: String?
     let value: String?
     let publicName: String
+    let isMamoOrFrequents: Bool
+    let imageData: Data?
 }
 
 struct FriendList: Equatable {

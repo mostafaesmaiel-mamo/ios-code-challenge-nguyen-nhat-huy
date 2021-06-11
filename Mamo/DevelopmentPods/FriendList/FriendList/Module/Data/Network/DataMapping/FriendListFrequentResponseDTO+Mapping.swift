@@ -38,6 +38,6 @@ extension FriendFrequentsDTO {
 
 extension FriendFrequentsDTO.FriendDTO {
     func toDomain() -> Friend {
-        return .init(id: Friend.Identifier(id), key: "", value: "", publicName: publicName)
+        return .init(id: Friend.Identifier(id), key: "", value: "", publicName: publicName, isMamoOrFrequents: true, imageData: nil)
     }
 }

@@ -106,7 +106,9 @@ extension FriendListViewController {
             let friend = Friend(id: Friend.Identifier.init(""),
                                 key: "",
                                 value: "",
-                                publicName: "\($0.familyName) \($0.givenName)")
+                                publicName: "\($0.familyName) \($0.givenName)",
+                                isMamoOrFrequents: false,
+                                imageData: $0.imageData)
             friendListItemViewModel.append(FriendListItemViewModel(friend: friend))
         }
         self.items.removeAll()
@@ -157,7 +159,6 @@ extension FriendListViewController {
     
     fileprivate func setupViews() {
         title = viewModel.screenTitle
-        collectionView.allowsSelection = false
         setupSearchController()
         self.view.addSubview(nextButtonView)
         nextButtonView.anchor(.bottom(view.bottomAnchor, constant: 0))
@@ -183,7 +184,6 @@ extension FriendListViewController {
             refreshControl.endRefreshing()
             refreshControl.removeFromSuperview()
         }
-        collectionView.allowsSelection = isSearch
         self.isSearching = isSearch
     }
     
@@ -192,7 +192,17 @@ extension FriendListViewController {
     }
     
     @objc func didTapToGoFriendDetails() {
-        viewModel.selectedHorizontalContact.value
+        guard let selectedIndex = selectedIndexPath else {
+            return
+        }
+        let friendListItemVM = items[selectedIndex.section][selectedIndex.item]
+        let friend = Friend(id: friendListItemVM.id,
+                            key: friendListItemVM.key,
+                            value: friendListItemVM.value,
+                            publicName: friendListItemVM.publicName,
+                            isMamoOrFrequents: friendListItemVM.isMamoOrFrequents,
+                            imageData: friendListItemVM.imageData)
+        viewModel.didSelect(friend)
     }
 }
 
@@ -205,11 +215,22 @@ extension FriendListViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: section == 0 && !isSearching ? 196 : 0)
+        return .init(width: view.frame.width, height: section == 0 && !isSearching ? 120 : 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(top: 16, left: 0, bottom: bottomWrapperHeight, right: 0)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return indexPath.section != 0 || isSearching
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 && !isSearching {
+            return
+        }
+        self.selectedIndexPath = indexPath
     }
 }
 
