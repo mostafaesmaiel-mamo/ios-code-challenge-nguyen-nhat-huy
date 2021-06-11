@@ -16,6 +16,8 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
     
     private var viewModel: FriendListViewModel!
     private var selectedIndexPath: IndexPath?
+    private var searchController = UISearchController(searchResultsController: nil)
+    private var isSearching = false
     
     lazy var containerOpenSettingStackView: UIStackView = {
         let stackView = UIStackView()
@@ -41,6 +43,12 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
         return label
     }()
     
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing")
+        refreshControl.addTarget(self, action: #selector(self.refreshCollectionView), for: .valueChanged)
+        return refreshControl
+    }()
     static func `init`(with viewModel: FriendListViewModel) -> FriendListViewController {
         let view = FriendListViewController()
         view.viewModel = viewModel
@@ -49,6 +57,7 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
         bind(to: viewModel)
         viewModel.viewDidLoad()
     }
@@ -58,23 +67,13 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
         viewModel.contactList.observe(on: self) { [weak self] in self?.updateItems($0) }
         viewModel.authorizedContact.observe(on: self) { [weak self] in self?.setupAuthorizeContactView($0) }
         viewModel.selectedHorizontalContact.observe(on: self) { [weak self] in self?.selectVerticalContact($0) }
+        viewModel.isSearching.observe(on: self) { [weak self] in self?.setupIsSearching($0) }
     }
     
     override func setupHeader(_ header: FriendListHeader) {
         header.friendListHeaderCellsHorizontalController.collectionView.backgroundColor = .clear
         header.friendListHeaderCellsHorizontalController.bind(to: viewModel)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: 80)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: section == 0 ? 156 : 0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 16, left: 0, bottom: 0, right: 0)
+        header.friendListHeaderCellsHorizontalController.view.addSubview(searchController.searchBar)
     }
 }
 
@@ -83,7 +82,10 @@ extension FriendListViewController {
     fileprivate func updateItems(_ contacts: [CNContact]) {
         var friendListItemViewModel = [FriendListItemViewModel]()
         contacts.forEach {
-            let friend = Friend(id: Friend.Identifier.init(""), publicName: "\($0.familyName) \($0.givenName)")
+            let friend = Friend(id: Friend.Identifier.init(""),
+                                key: "",
+                                value: "",
+                                publicName: "\($0.familyName) \($0.givenName)")
             friendListItemViewModel.append(FriendListItemViewModel(friend: friend))
         }
         self.items.removeAll()
@@ -130,5 +132,65 @@ extension FriendListViewController {
         }
         cell.isSelected = true
         selectedIndexPath = indexPath
+    }
+    
+    fileprivate func setupViews() {
+        title = viewModel.screenTitle
+        collectionView.allowsSelection = false
+        setupSearchController()
+    }
+    
+    fileprivate func setupSearchController() {
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search name, phone, email"
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.translatesAutoresizingMaskIntoConstraints = true
+        searchController.searchBar.setImage(UIImage(), for: .search, state: .normal)
+        searchController.searchBar.searchTextField.textColor = .white
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.autoresizingMask = [.flexibleWidth]
+        navigationItem.searchController = searchController
+    }
+    
+    fileprivate func setupIsSearching(_ isSearch: Bool) {
+        if isSearch {
+            collectionView.addSubview(refreshControl)
+        } else {
+            viewModel.viewDidLoad()
+            refreshControl.endRefreshing()
+            refreshControl.removeFromSuperview()
+        }
+        collectionView.allowsSelection = isSearch
+        self.isSearching = isSearch
+    }
+    
+    @objc func refreshCollectionView() {
+        setupIsSearching(false)
+    }
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension FriendListViewController {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: view.frame.width, height: 80)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .init(width: view.frame.width, height: section == 0 && !isSearching ? 196 : 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 16, left: 0, bottom: bottomWrapperHeight, right: 0)
+    }
+}
+
+extension FriendListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        viewModel.didSearch(query: searchText)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.didCancelSearch()
     }
 }

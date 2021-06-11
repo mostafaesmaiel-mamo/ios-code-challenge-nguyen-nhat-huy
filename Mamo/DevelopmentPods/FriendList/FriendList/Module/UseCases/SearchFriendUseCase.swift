@@ -1,18 +1,18 @@
 //
-//  FetchFriendsFrequentUseCase.swift
+//  SearchFriendUseCase.swift
 //  FriendList
 //
-//  Created by Huy Nguyen on 07/06/2021.
+//  Created by Huy Nguyen on 10/06/2021.
 //
 
 import Foundation
 import Networking
 
-protocol FetchFriendsFrequentUseCase {
+protocol SearchFriendUseCase {
     func execute(completion: @escaping (Result<FriendList, Error>) -> Void) -> Cancellable?
 }
 
-final class DefaultFetchFriendsFrequentUseCase: FetchFriendsFrequentUseCase {
+final class DefaultSearchFriendUseCase: SearchFriendUseCase {
     
     private let friendListRepository: FriendListRepository
     
@@ -22,7 +22,7 @@ final class DefaultFetchFriendsFrequentUseCase: FetchFriendsFrequentUseCase {
     
     func execute(completion: @escaping (Result<FriendList, Error>) -> Void) -> Cancellable? {
         
-        return friendListRepository.fetchFriendFrequentList { result in
+        return friendListRepository.searchFriendList { result in
             completion(result)
         }
     }

@@ -14,4 +14,9 @@ struct APIEndpoints {
         
         return Endpoint(path: "api/v2/frequents", method: .get)
     }
+    
+    static func searchAccounts() -> Endpoint<SearchAccountDTO> {
+        
+        return Endpoint(path: "api/v2/accounts", method: .post)
+    }
 }

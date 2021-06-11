@@ -20,6 +20,10 @@ final class DIContainer {
         return DefaultFetchFriendsFrequentUseCase(friendListRepository: makeFriendListRepository())
     }
     
+    func makeSearchFriendUseCase() -> SearchFriendUseCase {
+        return DefaultSearchFriendUseCase(friendListRepository: makeFriendListRepository())
+    }
+    
     // MARK: - Repositories
     func makeFriendListRepository() -> FriendListRepository {
         return DefaultFriendListRepository(apiDataTransferService: dependencies.apiDataTransferService)
@@ -31,6 +35,7 @@ final class DIContainer {
     
     func makeFriendListViewModel(actions: FriendListViewModelActions) -> FriendListViewModel {
         return DefaultFriendListViewModel(fetchFriendFrequentsUseCase: makeFetchFriendListUseCase(),
+                                          searchFriendUseCase: makeSearchFriendUseCase(),
                                           actions: actions)
     }
     

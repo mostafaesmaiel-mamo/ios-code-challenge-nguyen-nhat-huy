@@ -9,8 +9,12 @@ import Foundation
 import Networking
 
 protocol FriendListRepository {
+    
     @discardableResult
-    func fetchFriendFrequentList(completion: @escaping (Result<FriendFrequents, Error>) -> Void) -> Cancellable?
+    func fetchFriendFrequentList(completion: @escaping (Result<FriendList, Error>) -> Void) -> Cancellable?
+    
+    @discardableResult
+    func searchFriendList(completion: @escaping (Result<FriendList, Error>) -> Void) -> Cancellable?
 }
 
 final class DefaultFriendListRepository {
@@ -24,7 +28,7 @@ final class DefaultFriendListRepository {
 
 extension DefaultFriendListRepository: FriendListRepository {
     
-    func fetchFriendFrequentList(completion: @escaping (Result<FriendFrequents, Error>) -> Void) -> Cancellable? {
+    func fetchFriendFrequentList(completion: @escaping (Result<FriendList, Error>) -> Void) -> Cancellable? {
         let task = RepositoryTask()
         
         let endpoint = APIEndpoints.getListFrequents()
@@ -37,6 +41,21 @@ extension DefaultFriendListRepository: FriendListRepository {
             }
         }
         
+        return task
+    }
+    
+    func searchFriendList(completion: @escaping (Result<FriendList, Error>) -> Void) -> Cancellable? {
+        let task = RepositoryTask()
+        
+        let endpoint = APIEndpoints.searchAccounts()
+        task.networkTask = self.apiDataTransferService.request(with: endpoint) { result in
+            switch result {
+            case .success(let response):
+                completion(.success(response.toDomain()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
         return task
     }
 }
