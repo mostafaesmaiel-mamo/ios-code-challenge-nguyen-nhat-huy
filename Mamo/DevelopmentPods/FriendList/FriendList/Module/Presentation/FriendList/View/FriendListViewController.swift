@@ -18,6 +18,7 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
     private var selectedIndexPath: IndexPath?
     private var searchController = UISearchController(searchResultsController: nil)
     private var isSearching = false
+    private let bottomWrapperHeight: CGFloat = 80
     
     lazy var containerOpenSettingStackView: UIStackView = {
         let stackView = UIStackView()
@@ -49,6 +50,26 @@ final class FriendListViewController: ListHeaderController<FriendListItemCell,
         refreshControl.addTarget(self, action: #selector(self.refreshCollectionView), for: .valueChanged)
         return refreshControl
     }()
+    
+    lazy var nextButtonView: UIView = {
+        let buttonHeight: CGFloat = bottomWrapperHeight - 32
+        let view = UIView()
+        view.backgroundColor = .white
+        view.withSize(CGSize(width: self.view.frame.width, height: bottomWrapperHeight))
+        view.centerXToSuperview()
+        let button = UIButton()
+        view.addSubview(button)
+        button.setTitle("Next", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .purple
+        button.layer.cornerRadius = buttonHeight / 2
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(didTapToGoFriendDetails), for: .touchUpInside)
+        button.withSize(CGSize(width: self.view.frame.width - 32, height: buttonHeight))
+        button.centerInSuperview()
+        return view
+    }()
+    
     static func `init`(with viewModel: FriendListViewModel) -> FriendListViewController {
         let view = FriendListViewController()
         view.viewModel = viewModel
@@ -138,6 +159,8 @@ extension FriendListViewController {
         title = viewModel.screenTitle
         collectionView.allowsSelection = false
         setupSearchController()
+        self.view.addSubview(nextButtonView)
+        nextButtonView.anchor(.bottom(view.bottomAnchor, constant: 0))
     }
     
     fileprivate func setupSearchController() {
@@ -167,6 +190,12 @@ extension FriendListViewController {
     @objc func refreshCollectionView() {
         setupIsSearching(false)
     }
+    
+    @objc func didTapToGoFriendDetails() {
+        viewModel.selectedHorizontalContact.value
+    }
+}
+
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension FriendListViewController {

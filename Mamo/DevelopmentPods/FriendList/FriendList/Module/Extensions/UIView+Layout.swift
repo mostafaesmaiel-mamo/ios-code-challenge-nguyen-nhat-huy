@@ -137,4 +137,11 @@ extension UIView {
             heightAnchor.constraint(equalToConstant: size.height).isActive = true
         }
     }
+    
+    open func centerXToSuperview() {
+        translatesAutoresizingMaskIntoConstraints = false
+        if let superviewCenterXAnchor = superview?.centerXAnchor {
+            centerXAnchor.constraint(equalTo: superviewCenterXAnchor).isActive = true
+        }
+    }
 }
