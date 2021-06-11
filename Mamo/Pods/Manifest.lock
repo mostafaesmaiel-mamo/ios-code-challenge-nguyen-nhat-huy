@@ -2,10 +2,12 @@ PODS:
   - FriendList (0.1.0):
     - Networking
   - Networking (0.1.0)
+  - Networking/Tests (0.1.0)
 
 DEPENDENCIES:
   - FriendList (from `DevelopmentPods/FriendList`)
   - Networking (from `DevelopmentPods/Networking`)
+  - Networking/Tests (from `DevelopmentPods/Networking`)
 
 EXTERNAL SOURCES:
   FriendList:
@@ -15,8 +17,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FriendList: e0986f25d1a0a0c216c0c4a6f12c737615b81711
-  Networking: f06a92a992578896726059ffeb04841c8b34a3cd
+  Networking: b2288b6b4b22f08c61e64451248c598afe700d7b
 
-PODFILE CHECKSUM: f0ff39f556441c8909ae1ba8cb5e283c426abf6a
+PODFILE CHECKSUM: e581607c759ec11bb9d69c4040a4a6f6b5c371d1
 
 COCOAPODS: 1.10.1
