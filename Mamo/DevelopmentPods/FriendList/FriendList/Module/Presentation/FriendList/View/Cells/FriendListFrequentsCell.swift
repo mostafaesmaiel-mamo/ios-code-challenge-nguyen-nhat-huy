@@ -14,8 +14,8 @@ final class FriendListFrequentsCell: ListCell<FriendListItemViewModel> {
     
     override var item: FriendListItemViewModel! {
         didSet {
-            imageView.image = item.publicName.imageWithFirstCharacter()
             nameLabel.text = item.publicName
+            imageView.image = item.publicName.imageWithFirstCharacter()
         }
     }
     
@@ -28,7 +28,7 @@ final class FriendListFrequentsCell: ListCell<FriendListItemViewModel> {
                               spacing: 16,
                               alignment: UIStackView.Alignment.center)
             .withMargins(.verticalSides(16))
-        stackView.backgroundColor = .lightGray
+        stackView.backgroundColor = UIColor(red: 243.0/255.0, green: 245.0/255.0, blue: 249.0/255.0, alpha: 1.0)
         stackView.layer.cornerRadius = 10
         
         imageView.layer.cornerRadius = imgWidth / 2

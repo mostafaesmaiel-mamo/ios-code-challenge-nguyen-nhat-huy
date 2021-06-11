@@ -18,6 +18,8 @@ open class ListCell<T>: UICollectionViewCell {
                 self.layer.borderWidth = 0
                 self.layer.borderColor = UIColor.clear.cgColor
             }
+            self.layer.cornerRadius = 10
+            self.layer.masksToBounds = true
         }
     }
     

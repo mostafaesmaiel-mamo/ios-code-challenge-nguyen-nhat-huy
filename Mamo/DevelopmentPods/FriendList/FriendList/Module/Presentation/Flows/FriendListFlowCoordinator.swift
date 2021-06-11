@@ -9,6 +9,7 @@ import Foundation
 
 protocol FriendListFlowCoordinatorDependencies {
     func makeFriendListViewController(actions: FriendListViewModelActions) -> FriendListViewController
+    func makeFriendDetailsViewController(friendItemViewModel: FriendListItemViewModel)  -> UIViewController
 }
 
 final class FriendListFlowCoordinator {
@@ -22,21 +23,14 @@ final class FriendListFlowCoordinator {
     }
     
     func start() {
-        let actions = FriendListViewModelActions(showFriendDetails: showFriendDetails,
-                                                 showFriendQueriesSuggestions: showFriendQueriesSuggestions,
-                                                 closeFriendQueriesSuggestions: closeFriendQueriesSuggestions)
+        let actions = FriendListViewModelActions(showFriendDetails: showFriendDetails)
         let viewController = dependencies.makeFriendListViewController(actions: actions)
         navigationController?.pushViewController(viewController, animated: false)
     }
     
     private func showFriendDetails(friend: Friend) {
-        
-    }
-
-    private func showFriendQueriesSuggestions(didSelect: @escaping (FriendQuery) -> Void) {
-        
-    }
-
-    private func closeFriendQueriesSuggestions() {
+        let friendItemViewModel = FriendListItemViewModel(friend: friend)
+        let viewController = dependencies.makeFriendDetailsViewController(friendItemViewModel: friendItemViewModel)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

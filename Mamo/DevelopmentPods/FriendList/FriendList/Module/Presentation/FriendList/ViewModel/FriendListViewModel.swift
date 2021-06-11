@@ -11,18 +11,13 @@ import ContactsUI
 
 struct FriendListViewModelActions {
     let showFriendDetails: (Friend) -> Void
-    let showFriendQueriesSuggestions: (@escaping (_ didSelect: FriendQuery) -> Void) -> Void
-    let closeFriendQueriesSuggestions: () -> Void
 }
 
 protocol FriendListViewModelInput {
     func viewDidLoad()
     func didSearch(query: String)
     func didCancelSearch()
-    func showQueriesSuggestions()
-    func closeQueriesSuggestions()
-    func didSelectItem(at index: Int)
-    func showSettingsAlert(_ completionHandler: @escaping (_ accessGranted: Bool) -> Void)
+    func didSelect(_ friend: Friend)
 }
 
 protocol FriendListViewModelOutput {
@@ -107,6 +102,7 @@ final class DefaultFriendListViewModel: FriendListViewModel {
 extension DefaultFriendListViewModel {
     
     func viewDidLoad() {
+        resetPages()
         friendListLoadTask = fetchFriendFrequentsUseCase.execute(completion: { result in
             switch result {
             case .success(let friendList):
@@ -137,20 +133,8 @@ extension DefaultFriendListViewModel {
         
     }
     
-    func showQueriesSuggestions() {
-        
-    }
-    
-    func closeQueriesSuggestions() {
-        
-    }
-    
-    func didSelectItem(at index: Int) {
-        
-    }
-    
-    func showSettingsAlert(_ completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
-        
+    func didSelect(_ friend: Friend) {
+        actions?.showFriendDetails(friend)
     }
 }
 
@@ -165,6 +149,7 @@ extension DefaultFriendListViewModel {
             CNContactMiddleNameKey,
             CNContactFamilyNameKey,
             CNContactEmailAddressesKey,
+            CNContactImageDataKey,
         ] as [Any]
         
         //Get all the containers
@@ -192,16 +177,10 @@ extension DefaultFriendListViewModel {
         case .authorized:
             completionHandler(true)
         case .denied:
-            showSettingsAlert(completionHandler)
+            break
         case .restricted, .notDetermined:
             CNContactStore().requestAccess(for: .contacts) { granted, error in
-                if granted {
-                    completionHandler(true)
-                } else {
-                    DispatchQueue.main.async {
-                        self.showSettingsAlert(completionHandler)
-                    }
-                }
+                completionHandler(granted)
             }
         @unknown default:
             fatalError("Can not request access for contact")
