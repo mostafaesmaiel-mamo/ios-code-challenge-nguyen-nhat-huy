@@ -19,5 +19,12 @@
     "ios": "13.4"
   },
   "source_files": "Networking/Module/**/*.{swift}",
-  "resources": "Networking/Module/**/*.{xcassets,json,storyboard,xib,xcdatamodeld}"
+  "resources": "Networking/Module/**/*.{xcassets,json,storyboard,xib,xcdatamodeld}",
+  "testspecs": [
+    {
+      "name": "Tests",
+      "test_type": "unit",
+      "source_files": "Networking/Tests/**/*.{swift}"
+    }
+  ]
 }
