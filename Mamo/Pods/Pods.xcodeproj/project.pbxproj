@@ -45,6 +45,10 @@
 		B30738FF266F7AEA00E6703E /* RepositoryTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30738FE266F7AEA00E6703E /* RepositoryTask.swift */; };
 		B3359FD2267264BD00C03552 /* SearchFriendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3359FD1267264BD00C03552 /* SearchFriendUseCase.swift */; };
 		B3359FD62672675700C03552 /* SearchAccountResponseDTO+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3359FD52672675700C03552 /* SearchAccountResponseDTO+Mapping.swift */; };
+		B3359FDF267394CA00C03552 /* FriendDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3359FDE267394CA00C03552 /* FriendDetailsViewController.swift */; };
+		B3359FE12673950200C03552 /* FriendDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3359FE02673950200C03552 /* FriendDetailsViewModel.swift */; };
+		B3359FE42673968F00C03552 /* FriendDetailsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3359FE32673968F00C03552 /* FriendDetailsItemCell.swift */; };
+		B3359FE62673969D00C03552 /* FriendDetailsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3359FE52673969D00C03552 /* FriendDetailsHeaderCell.swift */; };
 		B804949EA63031DE5788BA716817433E /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D61563C1E9BA40650AB3CCF7913826 /* ListCell.swift */; };
 		B868443600526A952567B501BD945B2E /* Pods-Mamo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BB024B1966F0ADC8817085EBDF82DB0 /* Pods-Mamo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6CFBF048E03AEA820D33980B9ED71C8 /* Pods-Networking_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 84B5AD68B6A8BA70BA061093AB0EF892 /* Pods-Networking_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -162,6 +166,10 @@
 		B30F29EFD82F7ABC93BB2E32E6FEBD20 /* ListHeaderController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ListHeaderController.swift; sourceTree = "<group>"; };
 		B3359FD1267264BD00C03552 /* SearchFriendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendUseCase.swift; sourceTree = "<group>"; };
 		B3359FD52672675700C03552 /* SearchAccountResponseDTO+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchAccountResponseDTO+Mapping.swift"; sourceTree = "<group>"; };
+		B3359FDE267394CA00C03552 /* FriendDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailsViewController.swift; sourceTree = "<group>"; };
+		B3359FE02673950200C03552 /* FriendDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailsViewModel.swift; sourceTree = "<group>"; };
+		B3359FE32673968F00C03552 /* FriendDetailsItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailsItemCell.swift; sourceTree = "<group>"; };
+		B3359FE52673969D00C03552 /* FriendDetailsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailsHeaderCell.swift; sourceTree = "<group>"; };
 		C103E2D3D5F8048D3702F28A743776CE /* Pods-Mamo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Mamo-frameworks.sh"; sourceTree = "<group>"; };
 		C68F875E47F5654A2BF4B8E2DE809379 /* Networking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Networking-prefix.pch"; sourceTree = "<group>"; };
 		C7A9836A218DDAB6357036E3B6214F00 /* Pods-FriendList_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-FriendList_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -267,6 +275,7 @@
 				B30738E6266E76CB00E6703E /* Utils */,
 				BF5CA8FBA77265F7BF44716E1F2502D5 /* Flows */,
 				6C09BAEBCBE38466BC1E2C4DF417B6DE /* FriendList */,
+				B3359FDB2673949600C03552 /* FriendDetails */,
 			);
 			name = Presentation;
 			path = FriendList/Module/Presentation;
@@ -488,6 +497,41 @@
 				B30738FE266F7AEA00E6703E /* RepositoryTask.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		B3359FDB2673949600C03552 /* FriendDetails */ = {
+			isa = PBXGroup;
+			children = (
+				B3359FDC267394A600C03552 /* View */,
+				B3359FDD267394AB00C03552 /* ViewModel */,
+			);
+			path = FriendDetails;
+			sourceTree = "<group>";
+		};
+		B3359FDC267394A600C03552 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B3359FDE267394CA00C03552 /* FriendDetailsViewController.swift */,
+				B3359FE22673967100C03552 /* Cells */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B3359FDD267394AB00C03552 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B3359FE02673950200C03552 /* FriendDetailsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B3359FE22673967100C03552 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B3359FE32673968F00C03552 /* FriendDetailsItemCell.swift */,
+				B3359FE52673969D00C03552 /* FriendDetailsHeaderCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		B484754BF9A0948D5A7F0BD78E214771 /* Frameworks */ = {
@@ -803,6 +847,8 @@
 				B30738E8266E76D800E6703E /* Observable.swift in Sources */,
 				B30738E3266E75A800E6703E /* FriendListFrequentsCell.swift in Sources */,
 				4D20EC4D727BDC8DF730D9EA1A914147 /* DIContainer.swift in Sources */,
+				B3359FE42673968F00C03552 /* FriendDetailsItemCell.swift in Sources */,
+				B3359FDF267394CA00C03552 /* FriendDetailsViewController.swift in Sources */,
 				B3359FD2267264BD00C03552 /* SearchFriendUseCase.swift in Sources */,
 				B30738F5266F77D000E6703E /* APIEndpoints.swift in Sources */,
 				FBAD7FDAC2DF24B7745C1C814B766CE9 /* Friend.swift in Sources */,
@@ -816,6 +862,7 @@
 				A234973BFE9846006504FCD0A5CD8FD3 /* FriendListItemViewModel.swift in Sources */,
 				968FEB9753E61F11865E25D19DC809DF /* FriendListViewController.swift in Sources */,
 				B3359FD62672675700C03552 /* SearchAccountResponseDTO+Mapping.swift in Sources */,
+				B3359FE62673969D00C03552 /* FriendDetailsHeaderCell.swift in Sources */,
 				B804949EA63031DE5788BA716817433E /* ListCell.swift in Sources */,
 				8A655F1DA2CE97FD14E5D67CE513AC15 /* ListController.swift in Sources */,
 				59D35E23DE3A86F1AF90FA456715DE25 /* ListHeaderController.swift in Sources */,
@@ -827,6 +874,7 @@
 				E5C332168EBCD0AFB4C97B84B675C6ED /* UIView+Layout.swift in Sources */,
 				B30738FF266F7AEA00E6703E /* RepositoryTask.swift in Sources */,
 				B30738FC266F7AA700E6703E /* DefaultFriendListRepository.swift in Sources */,
+				B3359FE12673950200C03552 /* FriendDetailsViewModel.swift in Sources */,
 				B30738F2266E7A1000E6703E /* Cancellable.swift in Sources */,
 				F5E78EC643CCDD64FF392729EBE810DC /* UIView+Stacking.swift in Sources */,
 			);

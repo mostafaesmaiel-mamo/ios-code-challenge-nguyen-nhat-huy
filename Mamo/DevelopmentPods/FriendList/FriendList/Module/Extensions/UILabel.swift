@@ -18,15 +18,33 @@ extension UILabel {
     }
 }
 
+extension CGFloat {
+    static func random() -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UInt32.max)
+    }
+}
+
+extension UIColor {
+    static func random() -> UIColor {
+        return UIColor(
+           red:   .random(),
+           green: .random(),
+           blue:  .random(),
+           alpha: 1.0
+        )
+    }
+}
+
 extension String {
     func imageWithFirstCharacter() -> UIImage? {
+        let color = UIColor.random()
         let frame = CGRect(x: 0, y: 0, width: 60, height: 60)
         let nameLabel = UILabel(text: nil,
                             font: .boldSystemFont(ofSize: 24),
-                            textColor: .white,
+                            textColor: color,
                             textAlignment: .center)
         nameLabel.frame = frame
-        nameLabel.backgroundColor = .red
+        nameLabel.backgroundColor = color.withAlphaComponent(0.3)
         guard let firstChar = self.first else {
             return nil
         }
@@ -38,5 +56,9 @@ extension String {
             return nameImage
         }
         return nil
+    }
+    
+    func defaultWithDash() -> String {
+        return self.isEmpty ? "-" : self
     }
 }

@@ -29,6 +29,7 @@ final class DIContainer {
         return DefaultFriendListRepository(apiDataTransferService: dependencies.apiDataTransferService)
     }
     
+    // MARK: - Friend List
     func makeFriendListViewController(actions: FriendListViewModelActions) -> FriendListViewController {
         return FriendListViewController.`init`(with: makeFriendListViewModel(actions: actions))
     }
@@ -41,6 +42,15 @@ final class DIContainer {
     
     func makeFriendListFlowCoordinator(navigationController: UINavigationController) -> FriendListFlowCoordinator {
         return FriendListFlowCoordinator(navigationController: navigationController, dependencies: self)
+    }
+    
+    // MARK: - Friend Details
+    func makeFriendDetailsViewController(friendItemViewModel: FriendListItemViewModel) -> UIViewController {
+        return FriendDetailsViewController.`init`(with: makeFriendDetailsViewModel(friendItemViewModel: friendItemViewModel))
+    }
+    
+    func makeFriendDetailsViewModel(friendItemViewModel: FriendListItemViewModel) -> FriendDetailsViewModel {
+        return DefaultFriendDetailsViewModel(friendItemViewModel: friendItemViewModel)
     }
 }
 

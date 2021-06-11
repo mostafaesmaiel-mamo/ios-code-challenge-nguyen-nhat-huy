@@ -14,8 +14,13 @@ final class FriendListItemCell: ListCell<FriendListItemViewModel> {
     
     override var item: FriendListItemViewModel! {
         didSet {
-            imageView.image = item.publicName.imageWithFirstCharacter()
             nameLabel.text = item.publicName
+            guard let imageData = item.imageData,
+                  let image = UIImage(data: imageData) else {
+                imageView.image = item.publicName.imageWithFirstCharacter()
+                return
+            }
+            imageView.image = image
         }
     }
     
