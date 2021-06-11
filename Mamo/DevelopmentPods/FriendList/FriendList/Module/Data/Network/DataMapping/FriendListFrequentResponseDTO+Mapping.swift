@@ -31,13 +31,13 @@ extension FriendFrequentsDTO {
 }
 
 extension FriendFrequentsDTO {
-    func toDomain() -> FriendFrequents {
+    func toDomain() -> FriendList {
         return .init(friends: friends.map{ $0.toDomain() } )
     }
 }
 
 extension FriendFrequentsDTO.FriendDTO {
     func toDomain() -> Friend {
-        return .init(id: Friend.Identifier(id), publicName: publicName)
+        return .init(id: Friend.Identifier(id), key: "", value: "", publicName: publicName)
     }
 }

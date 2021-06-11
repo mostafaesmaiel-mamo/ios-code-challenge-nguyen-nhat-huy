@@ -10,9 +10,11 @@ import Foundation
 struct Friend: Equatable, Identifiable {
     typealias Identifier = String
     let id: Identifier
+    let key: String?
+    let value: String?
     let publicName: String
 }
 
-struct FriendFrequents: Equatable {
+struct FriendList: Equatable {
     let friends: [Friend]
 }

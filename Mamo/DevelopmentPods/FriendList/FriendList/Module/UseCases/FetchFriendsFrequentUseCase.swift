@@ -9,7 +9,7 @@ import Foundation
 import Networking
 
 protocol FetchFriendsFrequentUseCase {
-    func execute(completion: @escaping (Result<FriendFrequents, Error>) -> Void) -> Cancellable?
+    func execute(completion: @escaping (Result<FriendList, Error>) -> Void) -> Cancellable?
 }
 
 final class DefaultFetchFriendsFrequentUseCase: FetchFriendsFrequentUseCase {
@@ -20,7 +20,7 @@ final class DefaultFetchFriendsFrequentUseCase: FetchFriendsFrequentUseCase {
         self.friendListRepository = friendListRepository
     }
     
-    func execute(completion: @escaping (Result<FriendFrequents, Error>) -> Void) -> Cancellable? {
+    func execute(completion: @escaping (Result<FriendList, Error>) -> Void) -> Cancellable? {
         
         return friendListRepository.fetchFriendFrequentList { result in
             completion(result)

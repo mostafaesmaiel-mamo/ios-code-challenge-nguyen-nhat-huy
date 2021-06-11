@@ -29,6 +29,7 @@ protocol FriendListViewModelOutput {
     var friendListItemViewModel: Observable<[FriendListItemViewModel]> { get }
     var contactList: Observable<[CNContact]> { get }
     var selectedHorizontalContact: Observable<FriendListItemViewModel?> { get }
+    var isSearching: Observable<Bool> { get }
     var query: Observable<String> { get }
     var error: Observable<String> { get }
     var authorizedContact: Observable<Bool> { get }
@@ -44,6 +45,7 @@ protocol FriendListViewModel: FriendListViewModelInput, FriendListViewModelOutpu
 final class DefaultFriendListViewModel: FriendListViewModel {
     
     private let fetchFriendFrequentsUseCase: FetchFriendsFrequentUseCase
+    private let searchFriendUseCase: SearchFriendUseCase
     private let actions: FriendListViewModelActions?
     
     private var friendListLoadTask: Cancellable? { willSet { friendListLoadTask?.cancel() } }
@@ -53,11 +55,12 @@ final class DefaultFriendListViewModel: FriendListViewModel {
     let friendListItemViewModel: Observable<[FriendListItemViewModel]> = Observable([])
     let contactList: Observable<[CNContact]> = Observable([])
     var selectedHorizontalContact: Observable<FriendListItemViewModel?> = Observable(nil)
+    var isSearching: Observable<Bool> = Observable(false)
     let query: Observable<String> = Observable("")
     let error: Observable<String> = Observable("")
     var authorizedContact: Observable<Bool> = Observable(false)
     var isEmpty: Bool { return friendListItemViewModel.value.isEmpty || contactList.value.isEmpty }
-    let screenTitle = NSLocalizedString("Friends", comment: "")
+    let screenTitle = NSLocalizedString("Choose Recepient", comment: "")
     let emptyDataTitle = NSLocalizedString("Search results", comment: "")
     let errorTitle = NSLocalizedString("Error", comment: "")
     let searchBarPlaceholder = NSLocalizedString("Search Friends", comment: "")
@@ -65,13 +68,39 @@ final class DefaultFriendListViewModel: FriendListViewModel {
     // MARK: - Init
     
     init(fetchFriendFrequentsUseCase: FetchFriendsFrequentUseCase,
+         searchFriendUseCase: SearchFriendUseCase,
          actions: FriendListViewModelActions? = nil) {
         self.fetchFriendFrequentsUseCase = fetchFriendFrequentsUseCase
+        self.searchFriendUseCase = searchFriendUseCase
         self.actions = actions
     }
     
     private func handle(error: Error) {
         self.error.value = NSLocalizedString("Failed loading friends", comment: "")
+    }
+    
+    private func update() {
+        resetPages()
+        self.isSearching.value = true
+        friendListLoadTask = searchFriendUseCase.execute(completion: { result in
+            switch result {
+            case .success(let friendList):
+                var friendListItem = [FriendListItemViewModel]()
+                friendList.friends
+                    .filter { !$0.publicName.isEmpty }
+                    .forEach {
+                        friendListItem.append(FriendListItemViewModel(friend: $0))
+                    }
+                self.friendListItemViewModel.value.append(contentsOf: (friendListItem))
+            case .failure(let error):
+                self.handle(error: error)
+            }
+        })
+    }
+    
+    private func resetPages() {
+        friendListItemViewModel.value.removeAll()
+        contactList.value.removeAll()
     }
 }
 
@@ -80,9 +109,9 @@ extension DefaultFriendListViewModel {
     func viewDidLoad() {
         friendListLoadTask = fetchFriendFrequentsUseCase.execute(completion: { result in
             switch result {
-            case .success(let friendFrequents):
+            case .success(let friendList):
                 var friendListItem = [FriendListItemViewModel]()
-                friendFrequents.friends.forEach {
+                friendList.friends.forEach {
                     friendListItem.append(FriendListItemViewModel(friend: $0))
                 }
                 self.friendListItemViewModel.value.append(contentsOf: (friendListItem))
@@ -97,11 +126,11 @@ extension DefaultFriendListViewModel {
                 self.contactList.value.append(contentsOf: self.getContactFromCNContact())
             }
         }
-        
     }
     
     func didSearch(query: String) {
-        
+        guard !query.isEmpty else { return }
+        update()
     }
     
     func didCancelSearch() {
